@@ -1,0 +1,141 @@
+<mvc:View
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:macros="sap.fe.macros"
+    xmlns:macrosTable="sap.fe.macros.table"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    controllerName="com.dealmanage.dealheaderfpm.ext.view.Detail"
+    xmlns:f="sap.f">   
+
+    <Page
+        id="Main"
+        title="Deal List"
+        modelContextChange="onViewContextChange"
+    >
+        <content>
+            <VBox class="sapUiSmallMarginBegin sapUiSmallMarginBottom">
+                <macros:Form
+                    metaPath="/DealHeader/@com.sap.vocabularies.UI.v1.Facets/0"
+                    id="myForm2"
+                />
+                <macros:Form
+                    metaPath="@com.sap.vocabularies.UI.v1.FieldGroup#MilkPrice"
+                />
+            </VBox>
+            <VBox class="sapUiSmallMarginBegin">
+                <Table id="idPositions" items="{_DealPosition}" mode="SingleSelectLeft">
+                    <headerToolbar>
+                        <OverflowToolbar>
+                            <Title text="Deal Positions" level="H2"/>
+                            <ToolbarSpacer></ToolbarSpacer>
+                            <Button text="Refresh" press="onRefreshTable" />
+                            <Button	text="Create" visible="{ui>/isEditable}" press="onCreateDealPosition" />
+                            <Button	text="Delete" visible="{ui>/isEditable}" press="onDeleteDealPosition" />
+                        </OverflowToolbar>
+                    </headerToolbar>
+                    <columns>
+                        <Column>
+                            <header>
+                                <Text text="Item No" />
+                            </header>
+                        </Column>
+                        <Column>
+                            <header>
+                                <Text text="Proposed Qty" />
+                            </header>
+                        </Column>
+                        <Column>
+                            <header>
+                                <Text text="Article Number" />
+                            </header>
+                        </Column>
+                        <Column>
+                            <header>
+                                <Text text="Delivery Plant ID" />
+                            </header>
+                        </Column>
+                        <Column>
+                            <header>
+                                <Text text="Ingoing Price" />
+                            </header>
+                        </Column>
+                        <Column>
+                            <header>
+                                <Text text="Target Price" />
+                            </header>
+                        </Column>
+                        <Column>
+                            <header>
+                                <Text text="W-Way PR" />
+                            </header>
+                        </Column>
+                        <Column>
+                            <header>
+                                <Text text="Deviation" />
+                            </header>
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text id="idItemNo" text="{Posnr}" />
+                                <macros:Field readOnly="{= !${ui>/isEditable}}" id="idProposedVolume" contextPath="_DealPosition" metaPath="ProposedVolume" />
+                                <macros:Field readOnly="{= !${ui>/isEditable}}" id="idArticleNumber"  contextPath="_DealPosition" metaPath="Article" />
+                                <macros:Field readOnly="{= !${ui>/isEditable}}" id="idDeliveryPlant"  contextPath="_DealPosition" metaPath="DeliveryPlant" />
+                                <macros:Field readOnly="{= !${ui>/isEditable}}" id="idPriceIngoing"   contextPath="_DealPosition" metaPath="PriceIngoing" />
+                                <macros:Field readOnly="{= !${ui>/isEditable}}" id="idPriceTarget"    contextPath="_DealPosition" metaPath="PriceTarget" />
+                                <macros:Field readOnly="{= !${ui>/isEditable}}" id="idPriceWaway"     contextPath="_DealPosition" metaPath="PriceWAway" />
+                                <macros:Field readOnly="{= !${ui>/isEditable}}" id="idDeviation"      contextPath="_DealPosition" metaPath="Deviation" />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+
+                <macros:Table
+                    metaPath="/DealHeader/_DealPosition/@com.sap.vocabularies.UI.v1.LineItem"
+                    readOnly="true"
+                    id="DealItemTable">
+                    <macros:actions>
+                        <macrosTable:Action
+                            key="create"
+                            text="Create"
+                            press="onCreateItemPress"
+                            placement="After"
+                            visible="false"
+                            id="idTableItemCreateAction"
+                        />
+                    </macros:actions>
+                </macros:Table>
+
+            </VBox>
+        </content>
+        <footer>
+            <Bar>
+                <contentRight>
+                    <Button
+                        id="idDealHeaderEdit"
+                        visible="{= !${ui>/isEditable}}"
+                        text="Edit"
+                        type="Emphasized"
+                        press="onEdit"
+                    />
+                    <Button
+                        id="idDealHeaderSave"
+                        visible="{ui>/isEditable}"
+                        text="Save"
+                        textDirection="Inherit"
+                        type="Emphasized"
+                        press="onSave"
+                    />
+                    <Button
+                        id="idDealHeaderCancel"
+                        visible="{ui>/isEditable}"
+                        text="Cancel"
+                        press="onCancel"
+                    />
+                </contentRight>
+            </Bar>
+        </footer>
+    </Page>
+</mvc:View>
