@@ -40,6 +40,13 @@ sap.ui.define(
             //  onExit: function() {
             //
             //  }
+
+             onCreatePress: async function() {
+                await this.getExtensionAPI().getEditFlow().createDocument("/DealHeader", { creationMode: "NewPage"});
+                let table = this.byId("table");
+                table.getBinding("items")?.refresh();
+            }
+            
         });
     }
 );
